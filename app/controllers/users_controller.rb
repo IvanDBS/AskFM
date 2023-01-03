@@ -4,10 +4,20 @@ class UsersController < ApplicationController
   end
 
   def create
-    user_params = params.require(:user).permit(:name, :nickname, :email, :password)
+    user_params = params.require(:user).permit(:name, :nickname, :email, :password, :password_confirmation)
 
-    User.create(user_params)
+    @user = User.new(user_params)
 
-    redirect_to root_path, notice: 'Successfully registered'
+    if @user.save
+      redirect_to root_path, notice: 'Successfully registered'
+    else
+      flash.now[:alert] = 'Incorrect inserted data!'
+
+      render :new
+    end
+
+
+
+    
   end
 end
