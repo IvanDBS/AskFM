@@ -4,8 +4,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    user_params = params.require(:user).permit(:name, :nickname, :email, :password, :password_confirmation)
-
     @user = User.new(user_params)
 
     if @user.save
@@ -15,9 +13,30 @@ class UsersController < ApplicationController
 
       render :new
     end
+  end
 
+    def edit
+      @user = User.find(params[:id])
+    end
 
+    def update
+      @user = User.find(params[:id])   
+
+      if @user.update(user_params)
+      redirect_to root_path, notice: 'Successfully edited'
+    else
+      flash.now[:alert] = 'Incorrect inserted data!'
+
+      render :edit
+    end  
+    end
+
+    private
+
+    def user_params
+      params.require(:user).permit(:name, :nickname, :email, :password, :password_confirmation)
+    end
 
     
-  end
+  
 end
