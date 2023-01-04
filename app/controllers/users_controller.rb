@@ -31,12 +31,22 @@ class UsersController < ApplicationController
     end  
     end
 
+    def destroy
+    @user = User.find(params[:id])
+    @user.destroy 
+
+    session.delete(:user_id)
+
+    redirect_to root_path, notice: "User deleted!"
+  end  
+
+
     private
 
     def user_params
       params.require(:user).permit(:name, :nickname, :email, :password, :password_confirmation)
     end
 
-    
   
+   
 end

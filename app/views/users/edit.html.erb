@@ -4,7 +4,7 @@
    <% if @user.errors.any? %>
       <div class="mt">
       <% @user.errors.full_messages.each do |message| %>
-        <p class="mb-sm text-red"> <%= message %> </p>
+         <p class="mb-sm text-red"> <%= message %> </p>
       <% end %>
     </div>
   <% end %>
@@ -31,9 +31,15 @@
       <p> <%= form.password_field :password_confirmation, class: 'form-text-field' %> </p>
 
       <p class="mt-lg"> <%= form.submit 'Save', class: 'button button-main' %> 
-        <span class="text-sm"> or <%= link_to "Back", :back %> </span> </p>
+        <span class="text-sm"> or <%= link_to "Back", :back %> </span> 
+      </p>
     <% end %>
-
- 
   </div>
+
+<div class="mt-lg">
+    <%= button_to 'Delete profile', user_path(@user), 
+      method: :delete,
+      form: {data: {turbo_confirm: "Are you sure you want to delete profile?"}},
+      class: 'text-red text-sm' %>
+  </div>  
 </div>
